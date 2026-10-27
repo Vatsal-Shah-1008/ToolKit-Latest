@@ -43,6 +43,38 @@ document.addEventListener('DOMContentLoaded', () => {
     window.term.log('Vatsal\'s SecOps Console 2.0 initialized on Cloudflare Edge.');
     window.term.log('Cloudflare DNS-over-HTTPS (DoH) & RDAP RFC 7482 engines online.');
 
+    // Mobile Drawer Controls
+    const sidebar = document.querySelector('.sidebar');
+    const btnHamburger = document.getElementById('btn-hamburger');
+    const btnSidebarClose = document.getElementById('btn-sidebar-close');
+    const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+    function closeSidebar() {
+        if (sidebar) sidebar.classList.remove('open');
+        if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
+    }
+
+    if (btnHamburger) {
+        btnHamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (sidebar) sidebar.classList.toggle('open');
+            if (sidebarBackdrop) sidebarBackdrop.classList.toggle('active');
+        });
+    }
+
+    if (btnSidebarClose) btnSidebarClose.addEventListener('click', closeSidebar);
+    if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
+
+    // Terminal Drawer Minimize / Expand Toggle
+    const terminalDrawer = document.querySelector('.terminal-drawer');
+    const btnToggleTerm = document.getElementById('btn-toggle-term');
+    if (btnToggleTerm && terminalDrawer) {
+        btnToggleTerm.addEventListener('click', () => {
+            const isMin = terminalDrawer.classList.toggle('minimized');
+            btnToggleTerm.textContent = isMin ? '▲ Expand' : '▼ Minimize';
+        });
+    }
+
     // Navigation Switcher
     navItems.forEach(item => {
         item.addEventListener('click', () => {
@@ -57,6 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetPanel) targetPanel.classList.add('active');
 
             window.term.log(`Switched view context to module: [${viewId.toUpperCase()}]`);
+
+            // Auto-close drawer on mobile upon selection
+            if (window.innerWidth <= 900) {
+                closeSidebar();
+            }
         });
     });
 

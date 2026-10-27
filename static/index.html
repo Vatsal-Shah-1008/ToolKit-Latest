@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vatsal's SecOps Console 2.0 | Attack Surface & Reconnaissance</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,10 +17,11 @@
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="logo-badge">VS</div>
-            <div>
+            <div style="flex: 1; min-width: 0;">
                 <div class="logo-text-title">VATSAL'S SECOPS</div>
                 <div class="logo-text-subtitle">Attack Surface Console</div>
             </div>
+            <button class="btn-sidebar-close" id="btn-sidebar-close" aria-label="Close menu">✕</button>
         </div>
 
         <div class="nav-container">
@@ -84,11 +85,14 @@
         <div class="sidebar-footer">
             <div class="system-status-indicator">
                 <div class="pulse-dot"></div>
-                <span>SYSTEM ONLINE</span>
+                <span>CLOUDFLARE EDGE ACTIVE</span>
             </div>
-            <div style="margin-top: 4px; font-size: 0.68rem; color: var(--text-muted);">Cross-Platform Verified</div>
+            <div style="margin-top: 4px; font-size: 0.68rem; color: var(--text-muted);">Fully Responsive Console</div>
         </div>
     </aside>
+
+    <!-- Mobile Off-Canvas Backdrop -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
     <!-- =====================================================================
          2. MAIN DISPLAY & TELEMETRY
@@ -97,9 +101,18 @@
 
         <!-- Top Command Bar -->
         <header class="top-bar">
-            <div class="target-input-box">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
-                <input type="text" id="global-target-input" value="vatssi.in" placeholder="Enter target domain or IP (e.g. vatssi.in)">
+            <div class="top-bar-left">
+                <button class="btn-hamburger" id="btn-hamburger" aria-label="Toggle navigation">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <div class="target-input-box">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                    <input type="text" id="global-target-input" value="vatssi.in" placeholder="Enter target domain or IP">
+                </div>
             </div>
             <div class="action-btn-group">
                 <button class="btn-primary" id="btn-scan-all">⚡ Scan Target</button>
@@ -113,17 +126,17 @@
             <div class="kpi-card">
                 <span class="kpi-label">Subdomains Discovered</span>
                 <span class="kpi-value" id="kpi-subs" style="color: var(--accent-cyan);">Scanning...</span>
-                <span class="kpi-subtext">● CT Logs & DNS</span>
+                <span class="kpi-subtext">● CT Logs & DoH</span>
             </div>
             <div class="kpi-card">
                 <span class="kpi-label">Public TCP Ports</span>
                 <span class="kpi-value" id="kpi-ports" style="color: var(--accent-green);">Scanning...</span>
-                <span class="kpi-subtext">● Non-blocking Sockets</span>
+                <span class="kpi-subtext">● Edge Monitored</span>
             </div>
             <div class="kpi-card">
                 <span class="kpi-label">SSL/TLS Security</span>
                 <span class="kpi-value" id="kpi-ssl" style="color: var(--accent-purple);">Scanning...</span>
-                <span class="kpi-subtext">● SNI Verified</span>
+                <span class="kpi-subtext">● TLS 1.3 Verified</span>
             </div>
             <div class="kpi-card">
                 <span class="kpi-label">Defensive Posture</span>
@@ -141,7 +154,7 @@
                     <div class="card-header">
                         <div>
                             <div class="card-title">DNS Records & Authoritative Resolution Matrix</div>
-                            <div class="card-subtitle">Resolves A, AAAA, MX, NS, TXT, SOA, and CNAME records with dangling risk audits</div>
+                            <div class="card-subtitle">Resolves A, AAAA, MX, NS, TXT, SOA, and CNAME records via Cloudflare Global DoH</div>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -168,7 +181,7 @@
                     <div class="card-header">
                         <div>
                             <div class="card-title">Perimeter Subdomain Enumeration</div>
-                            <div class="card-subtitle">Harvests Certificate Transparency (crt.sh) logs with live IP verification</div>
+                            <div class="card-subtitle">Harvests Certificate Transparency (crt.sh) logs with live Cloudflare Anycast resolution</div>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -195,7 +208,7 @@
                     <div class="card-header">
                         <div>
                             <div class="card-title">Authoritative Registration & RDAP Intel</div>
-                            <div class="card-subtitle">Uses modern RFC 7482 HTTPS RDAP with socket WHOIS fallback</div>
+                            <div class="card-subtitle">Queries modern RFC 7482 HTTPS RDAP directly from ICANN registries</div>
                         </div>
                     </div>
                     <div class="tool-grid-2" style="margin-bottom: 16px;">
@@ -212,7 +225,7 @@
                             <div style="font-size:1.05rem; font-weight:700; color:var(--accent-green); margin-top:4px;" id="whois-expiry">Loading...</div>
                         </div>
                         <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
-                            <span class="kpi-label">Data Source</span>
+                            <span class="kpi-label">Protocol Source</span>
                             <div style="font-size:1.05rem; font-weight:700; color:var(--accent-cyan); margin-top:4px;" id="whois-source">RDAP HTTPS</div>
                         </div>
                     </div>
@@ -334,7 +347,7 @@
                     <div class="card-header">
                         <div>
                             <div class="card-title">Asynchronous TCP Port Scanner & Banner Grabber</div>
-                            <div class="card-subtitle">Pure async socket reachability checks with service banner extraction</div>
+                            <div class="card-subtitle">Perimeter socket reachability checks with protocol identification</div>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -395,7 +408,7 @@
                     <div class="card-header">
                         <div>
                             <div class="card-title">Cryptographic Suite & Hash Generator</div>
-                            <div class="card-subtitle">Calculates MD5, SHA-256, Base64, and parses unauthenticated JWT tokens</div>
+                            <div class="card-subtitle">Calculates SHA-256 and Base64 using browser WebCrypto API</div>
                         </div>
                     </div>
                     <div class="tool-input-row">
@@ -403,16 +416,16 @@
                     </div>
                     <div style="display:flex; flex-direction:column; gap:10px;">
                         <div>
-                            <span class="kpi-label">SHA-256</span>
+                            <span class="kpi-label">SHA-256 (WebCrypto)</span>
                             <div id="hash-sha256" style="background:#05080f; padding:8px 12px; border-radius:4px; font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-cyan); word-break:break-all;">--</div>
-                        </div>
-                        <div>
-                            <span class="kpi-label">MD5</span>
-                            <div id="hash-md5" style="background:#05080f; padding:8px 12px; border-radius:4px; font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-purple); word-break:break-all;">--</div>
                         </div>
                         <div>
                             <span class="kpi-label">Base64</span>
                             <div id="hash-base64" style="background:#05080f; padding:8px 12px; border-radius:4px; font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-green); word-break:break-all;">--</div>
+                        </div>
+                        <div>
+                            <span class="kpi-label">MD5 / HMAC</span>
+                            <div id="hash-md5" style="background:#05080f; padding:8px 12px; border-radius:4px; font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-purple); word-break:break-all;">--</div>
                         </div>
                     </div>
                 </div>
@@ -423,8 +436,8 @@
                 <div class="card">
                     <div class="card-header">
                         <div>
-                            <div class="card-title">CIDR & IPv4 / IPv6 Subnet Calculator</div>
-                            <div class="card-subtitle">100% mathematically verified network parameters, usable host ranges, and broadcast IPs</div>
+                            <div class="card-title">CIDR & IPv4 Subnet Calculator</div>
+                            <div class="card-subtitle">Evaluates network boundaries, usable host pools, and netmasks</div>
                         </div>
                     </div>
                     <div class="tool-input-row">
@@ -438,15 +451,15 @@
                         </div>
                         <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
                             <span class="kpi-label">Broadcast Address</span>
-                            <div style="font-size:1.1rem; font-weight:700; color:var(--text-primary); font-family:var(--font-mono);" id="cidr-bcast">192.168.1.255</div>
+                            <div style="font-size:1.1rem; font-weight:700; color:var(--text-primary); font-family:var(--font-mono);" id="cidr-bcast">Calculated Broadcast</div>
                         </div>
                         <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
-                            <span class="kpi-label">Subnet Mask</span>
-                            <div style="font-size:1.1rem; font-weight:700; color:var(--text-primary); font-family:var(--font-mono);" id="cidr-netmask">255.255.255.0</div>
+                            <span class="kpi-label">Prefix Mask</span>
+                            <div style="font-size:1.1rem; font-weight:700; color:var(--text-primary); font-family:var(--font-mono);" id="cidr-netmask">/24</div>
                         </div>
                         <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
                             <span class="kpi-label">Usable Host Range & Count</span>
-                            <div style="font-size:1.05rem; font-weight:700; color:var(--accent-green); font-family:var(--font-mono);" id="cidr-hosts">254 hosts (192.168.1.1 - 192.168.1.254)</div>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--accent-green); font-family:var(--font-mono);" id="cidr-hosts">254 usable IP hosts</div>
                         </div>
                     </div>
                 </div>
@@ -455,7 +468,7 @@
         </main>
 
         <!-- =====================================================================
-             3. TERMINAL OUTPUT DRAWER (Retained & Evolved from original console)
+             3. TERMINAL OUTPUT DRAWER (COLLAPSIBLE)
              ===================================================================== -->
         <footer class="terminal-drawer">
             <div class="terminal-header">
@@ -464,6 +477,7 @@
                     <span>OUTPUT LOG & TELEMETRY STREAM</span>
                 </div>
                 <div class="terminal-actions">
+                    <button class="btn-terminal" id="btn-toggle-term">▼ Minimize</button>
                     <button class="btn-terminal" id="btn-copy-term">Copy Output</button>
                     <button class="btn-terminal" id="btn-clear-term">Clear</button>
                 </div>
@@ -478,7 +492,7 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast-msg"></div>
 
-    <script src="/static/js/terminal.js"></script>
-    <script src="/static/js/app.js"></script>
+    <script src="js/terminal.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
