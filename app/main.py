@@ -27,10 +27,19 @@ app.add_middleware(
 app.include_router(recon.router)
 app.include_router(export.router)
 
-# Static Files Path
+# Static Files Path (Supports both root layout and static dir)
 current_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(current_dir)
 static_dir = os.path.join(root_dir, "static")
+
+css_dir = os.path.join(root_dir, "css")
+js_dir = os.path.join(root_dir, "js")
+
+if os.path.exists(css_dir):
+    app.mount("/css", StaticFiles(directory=css_dir), name="css")
+
+if os.path.exists(js_dir):
+    app.mount("/js", StaticFiles(directory=js_dir), name="js")
 
 if os.path.exists(static_dir):
     app.mount("/static", StaticFiles(directory=static_dir), name="static")
@@ -46,9 +55,12 @@ def healthcheck():
 
 @app.get("/")
 def serve_dashboard():
-    index_path = os.path.join(static_dir, "index.html")
-    if os.path.exists(index_path):
-        return FileResponse(index_path)
+    root_index = os.path.join(root_dir, "index.html")
+    if os.path.exists(root_index):
+        return FileResponse(root_index)
+    static_index = os.path.join(static_dir, "index.html")
+    if os.path.exists(static_index):
+        return FileResponse(static_index)
     return {"message": f"{settings.APP_NAME} is active. Visit /docs for OpenAPI endpoints."}
 
 if __name__ == "__main__":

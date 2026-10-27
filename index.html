@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vatsal's SecOps Console 2.0 | Attack Surface & Reconnaissance</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- =====================================================================
+         1. SIDEBAR NAVIGATION
+         ===================================================================== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-badge">VS</div>
+            <div>
+                <div class="logo-text-title">VATSAL'S SECOPS</div>
+                <div class="logo-text-subtitle">Attack Surface Console</div>
+            </div>
+        </div>
+
+        <div class="nav-container">
+            <div class="nav-section-title">Core Reconnaissance</div>
+            <ul class="nav-list">
+                <li class="nav-item active" data-view="dns">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>DNS & Record Matrix</span>
+                </li>
+                <li class="nav-item" data-view="subdomains">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                    <span>Subdomain Discovery</span>
+                </li>
+                <li class="nav-item" data-view="whois">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span>WHOIS & RDAP Intel</span>
+                </li>
+                <li class="nav-item" data-view="geo">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                    <span>IP Geolocation & ASN</span>
+                </li>
+            </ul>
+
+            <div class="nav-section-title">Posture & Defense</div>
+            <ul class="nav-list">
+                <li class="nav-item" data-view="headers">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>Headers & CSP Grader</span>
+                </li>
+                <li class="nav-item" data-view="ssl">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>SSL / TLS Deep Inspector</span>
+                </li>
+            </ul>
+
+            <div class="nav-section-title">Active Perimeter Scan</div>
+            <ul class="nav-list">
+                <li class="nav-item" data-view="ports">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                    <span>Async TCP Port Scanner</span>
+                </li>
+            </ul>
+
+            <div class="nav-section-title">Cryptography & Utilities</div>
+            <ul class="nav-list">
+                <li class="nav-item" data-view="password">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+                    <span>Password Entropy Lab</span>
+                </li>
+                <li class="nav-item" data-view="crypto">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                    <span>Hashes & JWT Decoder</span>
+                </li>
+                <li class="nav-item" data-view="subnet">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="6" height="6"></rect><rect x="16" y="2" width="6" height="6"></rect><rect x="9" y="16" width="6" height="6"></rect><path d="M5 8v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"></path><path d="M12 12v4"></path></svg>
+                    <span>CIDR Subnet Calculator</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="system-status-indicator">
+                <div class="pulse-dot"></div>
+                <span>CLOUDFLARE EDGE ACTIVE</span>
+            </div>
+            <div style="margin-top: 4px; font-size: 0.68rem; color: var(--text-muted);">Direct GitHub Deployment Ready</div>
+        </div>
+    </aside>
+
+    <!-- =====================================================================
+         2. MAIN DISPLAY & TELEMETRY
+         ===================================================================== -->
+    <div class="main-wrapper">
+
+        <!-- Top Command Bar -->
+        <header class="top-bar">
+            <div class="target-input-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                <input type="text" id="global-target-input" value="vatssi.in" placeholder="Enter target domain or IP (e.g. vatssi.in)">
+            </div>
+            <div class="action-btn-group">
+                <button class="btn-primary" id="btn-scan-all">⚡ Scan Target</button>
+                <button class="btn-secondary" id="btn-export-dossier">📄 Export Dossier</button>
+                <button class="btn-secondary" id="btn-theme-toggle">🎨 Theme</button>
+            </div>
+        </header>
+
+        <!-- KPI Telemetry Strip -->
+        <div class="kpi-strip">
+            <div class="kpi-card">
+                <span class="kpi-label">Subdomains Discovered</span>
+                <span class="kpi-value" id="kpi-subs" style="color: var(--accent-cyan);">Scanning...</span>
+                <span class="kpi-subtext">● CT Logs & DoH</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">Public TCP Ports</span>
+                <span class="kpi-value" id="kpi-ports" style="color: var(--accent-green);">Scanning...</span>
+                <span class="kpi-subtext">● Edge Monitored</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">SSL/TLS Security</span>
+                <span class="kpi-value" id="kpi-ssl" style="color: var(--accent-purple);">Scanning...</span>
+                <span class="kpi-subtext">● TLS 1.3 Verified</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">Defensive Posture</span>
+                <span class="kpi-value" id="kpi-grade" style="color: var(--accent-amber);">Scanning...</span>
+                <span class="kpi-subtext">● Headers & CSP</span>
+            </div>
+        </div>
+
+        <!-- Work Area Views -->
+        <main class="workspace-body">
+
+            <!-- View 1: DNS -->
+            <section class="view-panel active" id="panel-dns">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">DNS Records & Authoritative Resolution Matrix</div>
+                            <div class="card-subtitle">Resolves A, AAAA, MX, NS, TXT, SOA, and CNAME records via Cloudflare Global DoH</div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="secops-table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Target Host</th>
+                                    <th>Resolved Value</th>
+                                    <th>Security Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-dns-body">
+                                <tr><td colspan="4" style="text-align: center; padding: 18px;">Click "⚡ Scan Target" to resolve DNS...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View 2: Subdomains -->
+            <section class="view-panel" id="panel-subdomains">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Perimeter Subdomain Enumeration</div>
+                            <div class="card-subtitle">Harvests Certificate Transparency (crt.sh) logs with live Cloudflare Anycast resolution</div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="secops-table">
+                            <thead>
+                                <tr>
+                                    <th>Discovered Subdomain</th>
+                                    <th>Resolved IP</th>
+                                    <th>Resolution State</th>
+                                    <th>Perimeter Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-subs-body">
+                                <tr><td colspan="4" style="text-align: center; padding: 18px;">Click "⚡ Scan Target" to harvest subdomains...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View 3: WHOIS -->
+            <section class="view-panel" id="panel-whois">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Authoritative Registration & RDAP Intel</div>
+                            <div class="card-subtitle">Queries modern RFC 7482 HTTPS RDAP directly from ICANN registries</div>
+                        </div>
+                    </div>
+                    <div class="tool-grid-2" style="margin-bottom: 16px;">
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Registrar</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--text-primary); margin-top:4px;" id="whois-reg">Loading...</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Created Date</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--text-primary); margin-top:4px;" id="whois-created">Loading...</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Registry Expiration</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--accent-green); margin-top:4px;" id="whois-expiry">Loading...</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Protocol Source</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--accent-cyan); margin-top:4px;" id="whois-source">RDAP HTTPS</div>
+                        </div>
+                    </div>
+                    <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:6px;">Name Servers: <span id="whois-ns" style="color:var(--text-primary); font-family:var(--font-mono);">Loading...</span></div>
+                    <pre id="whois-raw" style="background:#05080f; padding:12px; border-radius:6px; font-family:var(--font-mono); font-size:0.75rem; color:#94a3b8; overflow-x:auto; max-height:200px;">Querying WHOIS...</pre>
+                </div>
+            </section>
+
+            <!-- View 4: IP Geo -->
+            <section class="view-panel" id="panel-geo">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">IP Geolocation & Autonomous System (ASN)</div>
+                            <div class="card-subtitle">Maps BGP routing, upstream ISP, and physical hosting coordinates</div>
+                        </div>
+                    </div>
+                    <div class="tool-grid-2">
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Resolved IP Address</span>
+                            <div style="font-size:1.1rem; font-weight:700; color:var(--accent-cyan); margin-top:4px; font-family:var(--font-mono);" id="geo-ip">Loading...</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Autonomous System (ASN)</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--text-primary); margin-top:4px;" id="geo-asn">Loading...</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Location (City, Country)</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--text-primary); margin-top:4px;" id="geo-location">Loading...</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Internet Service Provider (ISP)</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--text-primary); margin-top:4px;" id="geo-isp">Loading...</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:14px; font-size:0.75rem; color:var(--text-muted);">Coordinates: <span id="geo-coords" style="color:var(--text-primary); font-family:var(--font-mono);">Loading...</span></div>
+                </div>
+            </section>
+
+            <!-- View 5: Headers -->
+            <section class="view-panel" id="panel-headers">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">HTTP Defensive Headers & Posture Grader</div>
+                            <div class="card-subtitle">Audits HSTS, CSP, X-Frame-Options, Permissions-Policy, and WAF signatures</div>
+                        </div>
+                    </div>
+                    <div class="tool-grid-2" style="margin-bottom: 16px;">
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Security Grade</span>
+                            <div style="font-size:1.4rem; font-weight:700; color:var(--accent-cyan);" id="headers-grade">--</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Defensive Score</span>
+                            <div style="font-size:1.4rem; font-weight:700; color:var(--accent-green);" id="headers-score">-- / 100</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">WAF / Edge Protection</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--accent-purple);" id="headers-waf">Checking...</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Server Software Disclosed</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--text-primary);" id="headers-server">Checking...</div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="secops-table">
+                            <thead>
+                                <tr>
+                                    <th>Defensive Header</th>
+                                    <th>Status</th>
+                                    <th>Configured Value</th>
+                                    <th>Security Impact</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-headers-body">
+                                <tr><td colspan="4" style="text-align: center; padding: 18px;">Click "⚡ Scan Target" to audit headers...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View 6: SSL -->
+            <section class="view-panel" id="panel-ssl">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">SSL / TLS Deep Cryptographic Inspector</div>
+                            <div class="card-subtitle">Inspects X.509 certificate parameters, validity dates, SANs, and negotiated ciphers</div>
+                        </div>
+                    </div>
+                    <div class="tool-grid-2">
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Subject Common Name</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--accent-cyan); font-family:var(--font-mono);" id="ssl-subject">Loading...</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Certificate Authority (Issuer)</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--text-primary);" id="ssl-issuer">Loading...</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Validity & Expiration</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--accent-green);" id="ssl-expiry">Loading...</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">TLS Protocol & Cipher</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--text-primary); font-family:var(--font-mono);" id="ssl-protocol">Loading...</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:14px; font-size:0.75rem; color:var(--text-muted);">Subject Alternative Names (SANs): <span id="ssl-sans" style="color:var(--text-primary); font-family:var(--font-mono);">Loading...</span></div>
+                </div>
+            </section>
+
+            <!-- View 7: Ports -->
+            <section class="view-panel" id="panel-ports">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Asynchronous TCP Port Scanner & Banner Grabber</div>
+                            <div class="card-subtitle">Perimeter socket reachability checks with protocol identification</div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="secops-table">
+                            <thead>
+                                <tr>
+                                    <th>Port</th>
+                                    <th>State</th>
+                                    <th>Service Name</th>
+                                    <th>Banner Output</th>
+                                    <th>Risk Evaluation</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-ports-body">
+                                <tr><td colspan="5" style="text-align: center; padding: 18px;">Click "⚡ Scan Target" to probe ports...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View 8: Password -->
+            <section class="view-panel" id="panel-password">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Shannon Entropy & Password Strength Lab</div>
+                            <div class="card-subtitle">Calculates true mathematical Shannon entropy and offline GPU crack-time estimates</div>
+                        </div>
+                    </div>
+                    <div class="tool-input-row">
+                        <input type="text" class="tool-text-input" id="pwd-test-input" placeholder="Type password or secret to evaluate in real-time...">
+                    </div>
+                    <div class="tool-grid-2">
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Shannon Entropy</span>
+                            <div style="font-size:1.25rem; font-weight:700; color:var(--accent-cyan); font-family:var(--font-mono);" id="pwd-shannon">0.0 bits/sym</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Key Space Entropy</span>
+                            <div style="font-size:1.25rem; font-weight:700; color:var(--accent-purple); font-family:var(--font-mono);" id="pwd-entropy">0.0 bits</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Offline GPU Crack Time (10 GH/s)</span>
+                            <div style="font-size:1.15rem; font-weight:700; color:var(--accent-amber);" id="pwd-crack">Instant</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">NIST Strength Verdict</span>
+                            <div style="font-size:1.15rem; font-weight:700; color:var(--accent-green);" id="pwd-rating">EMPTY</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View 9: Crypto -->
+            <section class="view-panel" id="panel-crypto">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Cryptographic Suite & Hash Generator</div>
+                            <div class="card-subtitle">Calculates SHA-256 and Base64 using browser WebCrypto API</div>
+                        </div>
+                    </div>
+                    <div class="tool-input-row">
+                        <input type="text" class="tool-text-input" id="hash-test-input" placeholder="Enter string to compute hashes...">
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div>
+                            <span class="kpi-label">SHA-256 (WebCrypto)</span>
+                            <div id="hash-sha256" style="background:#05080f; padding:8px 12px; border-radius:4px; font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-cyan); word-break:break-all;">--</div>
+                        </div>
+                        <div>
+                            <span class="kpi-label">Base64</span>
+                            <div id="hash-base64" style="background:#05080f; padding:8px 12px; border-radius:4px; font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-green); word-break:break-all;">--</div>
+                        </div>
+                        <div>
+                            <span class="kpi-label">MD5 / HMAC</span>
+                            <div id="hash-md5" style="background:#05080f; padding:8px 12px; border-radius:4px; font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-purple); word-break:break-all;">--</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View 10: Subnet CIDR -->
+            <section class="view-panel" id="panel-subnet">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">CIDR & IPv4 Subnet Calculator</div>
+                            <div class="card-subtitle">Evaluates network boundaries, usable host pools, and netmasks</div>
+                        </div>
+                    </div>
+                    <div class="tool-input-row">
+                        <input type="text" class="tool-text-input" id="cidr-test-input" value="192.168.1.0/24" placeholder="Enter CIDR (e.g. 192.168.1.0/24)">
+                        <button class="btn-primary" id="btn-calc-cidr">Calculate</button>
+                    </div>
+                    <div class="tool-grid-2">
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Network Address</span>
+                            <div style="font-size:1.1rem; font-weight:700; color:var(--accent-cyan); font-family:var(--font-mono);" id="cidr-net">192.168.1.0</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Broadcast Address</span>
+                            <div style="font-size:1.1rem; font-weight:700; color:var(--text-primary); font-family:var(--font-mono);" id="cidr-bcast">Calculated Broadcast</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Prefix Mask</span>
+                            <div style="font-size:1.1rem; font-weight:700; color:var(--text-primary); font-family:var(--font-mono);" id="cidr-netmask">/24</div>
+                        </div>
+                        <div class="card" style="margin-bottom:0; background:rgba(0,0,0,0.2);">
+                            <span class="kpi-label">Usable Host Range & Count</span>
+                            <div style="font-size:1.05rem; font-weight:700; color:var(--accent-green); font-family:var(--font-mono);" id="cidr-hosts">254 usable IP hosts</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- =====================================================================
+             3. TERMINAL OUTPUT DRAWER (Retained & Evolved from original console)
+             ===================================================================== -->
+        <footer class="terminal-drawer">
+            <div class="terminal-header">
+                <div class="terminal-title">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                    <span>OUTPUT LOG & TELEMETRY STREAM</span>
+                </div>
+                <div class="terminal-actions">
+                    <button class="btn-terminal" id="btn-copy-term">Copy Output</button>
+                    <button class="btn-terminal" id="btn-clear-term">Clear</button>
+                </div>
+            </div>
+            <div class="terminal-body" id="terminal-output">
+                <!-- Live logs injected here by terminal.js -->
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-msg"></div>
+
+    <script src="js/terminal.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
